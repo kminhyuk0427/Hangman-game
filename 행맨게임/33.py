@@ -1,5 +1,5 @@
 import pygame
-
+import math
 #1. 초기화
 pygame.init()
 
@@ -37,33 +37,43 @@ while not exit:
         #A=왼쪽 밑 B=오른쪽 밑 C=A와B사이의 1/6 D=정사각형 AC거리와 같음 
         A=tup_r((0,size[1]*2/3)) #함수를 부르면서 튜플(0,600)을 값으로 줌   (2/3)은 삼분의 이
         B=(size[0],A[1]) #(size[0],size[1]*2/3) A의 y값과 B의 y값이 같음
-        pygame.draw.line(screen, black,A,B,3)#단두대 바닥
+        pygame.draw.line(screen, black,A,B,3)# 바닥
         C=(size[0]/6,A[1]) #나누기6과 1/6이 같음
         D=(C[0],C[0]) #C의 x값과 모두 같음
-        pygame.draw.line(screen, black,C,D,3)#단두대 기둥
+        pygame.draw.line(screen, black,C,D,3)#단두대 바닥
         E=tup_r((size[0]/2,D[1])) #D와 y값이 같고 x는 전체/2
         pygame.draw.line(screen, black,D,E,3)#단두대 위
         F=(E[0],E[1]+C[0]) #y값이 E보다 아래
-        pygame.draw.line(screen, black,E,F,3)#목 매다는 곳
+        pygame.draw.line(screen, black,E,F,3)#단두대 목 달리는 곳
 
     #4-4-2(사람)
         head=round(size[0]/12)#원의 반지름                              #머리
-        G=(F[0],F[1]+head)#원의 중심
+        G=(F[0],F[1]+head)#원의 중심                                    
         pygame.draw.circle(screen, black,G,head,3)
-        H=(G[0],G[1]+head)#x값 그대로 g1에 반지름만큼 추가               #목
-        I=(H[0],H[1]+head/2)#head보다 좀 짧게
-        pygame.draw.line(screen, black,I,H,3)
-        J=(I[0],I[1]+head*2)#목보다 4배 길게                            #몸통
-        pygame.draw.line(screen, black,I,J,3)
-        K=(J[0]-head,I[1]+head)#목보다 head만큼 아래쪽에                 #오른팔
-        pygame.draw.line(screen, black,I,K,3)
-        L=(J[0]+head,K[1])#""                                          #왼팔
-        pygame.draw.line(screen, black,I,L,3)
-        M=(J[0]-head,J[1]+head)#몸통보다 head만큼 아래                   #오른 다리
-        pygame.draw.line(screen, black,J,M,3)
-        N=(J[0]+head,M[1])#""                                          #왼 다리
-        pygame.draw.line(screen, black,J,N,3)
 
+        H=(G[0],G[1]+head)#x값 그대로 g1에 반지름만큼 추가               #목
+        I=(H[0],H[1]+head/2)#head보다 좀 짧게                           
+        pygame.draw.line(screen, black,I,H,3)
+
+        arm=head*2
+        J=tup_r((I[0]-arm*math.cos(30*math.pi/180),
+           I[1]+arm*math.sin(30*math.pi/180)))#이게무슨개소리노          #오른팔
+        pygame.draw.line(screen, black,I,J,3)
+
+        K=tup_r((I[0]+arm*math.cos(30*math.pi/180),
+           I[1]+arm*math.sin(30*math.pi/180)))#이게무슨개소리노          #왼팔
+        pygame.draw.line(screen, black,I,K,3)
+
+        L=(I[0],I[1]+arm)
+        pygame.draw.line(screen, black,I,L,3)                           #몸
+    
+        M=tup_r((L[0]-arm*math.cos(30*math.pi/180),
+           L[1]+arm*math.sin(30*math.pi/180)))#이게무슨개소리노          #오른다리
+        pygame.draw.line(screen, black,L,M,3)
+
+        N=tup_r((L[0]+arm*math.cos(30*math.pi/180),
+           L[1]+arm*math.sin(30*math.pi/180)))#이게무슨개소리노          #왼다리
+        pygame.draw.line(screen, black,L,N,3)
 
 
 #4-5 업데이트
